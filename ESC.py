@@ -138,6 +138,8 @@ def control():
 
         pwm.set_pwm(12, 0, arm_hor + 150)
         pwm.set_pwm(11, 0, 600 - arm_hor)
+        pwm.set_pwm(10, 0, arm_hor + 150)
+        pwm.set_pwm(9, 0, 600 - arm_hor)
             
 def arm(): #This is the arming procedure of an ESC 
     print "Connect the battery and press Enter"
