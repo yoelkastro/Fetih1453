@@ -12,7 +12,7 @@ import Adafruit_PCA9685
 import keyboard
 import thread
 
-def pressEnter():
+def pressEnter(): #Function that presses the enter key
     while True:
         keyboard.press("enter")
         time.sleep(0.01)
@@ -28,7 +28,9 @@ pwm = Adafruit_PCA9685.PCA9685(address=0x49)
 
 servo_min = 150  # Min pulse length out of 4096
 servo_max = 600  # Max pulse length out of 4096
-servo_ang = 370
+dumen_ang = 370
+arm_ver = 0  # 0 -> 450
+arm_hor = 0
 
 max_value = 2000 #change this if your ESC's max value is different or leave it be
 min_value = 700  #change this if your ESC's min value is different or leave it be
@@ -89,7 +91,9 @@ def calibrate():   #This is the auto calibration procedure of a normal ESC
             control() # You can change this to any other function you want
             
 def control():
-    global servo_ang
+    global dumen_ang
+    global arm_ver
+    global arm_hor
     print "I'm Starting the motor, I hope its calibrated and armed, if not restart by giving 'x'"
     time.sleep(1)
     speed = 1500    # change your speed if you want to.... it should be between 700 - 2000
@@ -100,22 +104,40 @@ def control():
         inp = raw_input()
         
         if inp == "a":
-            speed -= 100    # decrementing the speed like hell
+            speed -= 100    # decrementing the speed of ESC like hell
             print "speed = %d" % speed
         elif inp == "q":    
-            speed += 100    # incrementing the speed like hell
+            speed += 100    # incrementing the speed of ESC like hell
             print "speed = %d" % speed
-        elif inp == "w" and servo_ang < 500:    
-            servo_ang += 40
-        elif inp == "s" and servo_ang > 200:    
-            servo_ang -= 40                   
+
+        elif inp == "w" and servo_ang < 500:
+            dumen_ang += 40
+        elif inp == "s" and servo_ang > 200: 
+            dumen_ang -= 40
+
+        elif inp == "w" and arm_ver < 450:    
+            arm_ver += 10
+        elif inp == "s" and arm_ver > 0:    
+            arm_ver -= 10
+
+        elif inp == "w" and arm_hor < 450:
+            dumen_ang += 10
+        elif inp == "s" and arm_hor > 0:    
+            dumen_ang -= 10
+       
         elif inp == "stop":
             stop()          #going for the stop function
             break	
-        else:
-            print "WHAT DID I SAID!! Press a,q,d or e"
-        pwm.set_pwm(15, 0, servo_ang)
-        print(servo_ang)
+        elif inp != "":
+            print "WHAT DID I SAID!! Make good input please thank you"
+
+        pwm.set_pwm(15, 0, dumen_ang)  # Dümen
+
+        pwm.set_pwm(14, 0, arm_ver + 150)
+        pwm.set_pwm(13, 0, 600 - arm_ver)
+
+        pwm.set_pwm(12, 0, arm_hor + 150)
+        pwm.set_pwm(11, 0, 600 - arm_hor)
             
 def arm(): #This is the arming procedure of an ESC 
     print "Connect the battery and press Enter"
