@@ -115,14 +115,14 @@ def control():
         elif inp == "s" and servo_ang > 200: 
             dumen_ang -= 40
 
-        elif inp == "w" and arm_ver < 450:    
+        elif inp == "e" and arm_ver < 450:    
             arm_ver += 10
-        elif inp == "s" and arm_ver > 0:    
+        elif inp == "d" and arm_ver > 0:    
             arm_ver -= 10
 
-        elif inp == "w" and arm_hor < 450:
+        elif inp == "r" and arm_hor < 450:
             dumen_ang += 10
-        elif inp == "s" and arm_hor > 0:    
+        elif inp == "f" and arm_hor > 0:    
             dumen_ang -= 10
        
         elif inp == "stop":
@@ -133,13 +133,13 @@ def control():
 
         pwm.set_pwm(15, 0, dumen_ang)  # Dümen
 
-        pwm.set_pwm(14, 0, arm_ver + 150)
-        pwm.set_pwm(13, 0, 600 - arm_ver)
+        pwm.set_pwm(14, 0, arm_hor + 150)
+        pwm.set_pwm(13, 0, 600 - arm_hor)
 
-        pwm.set_pwm(12, 0, arm_hor + 150)
-        pwm.set_pwm(11, 0, 600 - arm_hor)
-        pwm.set_pwm(10, 0, arm_hor + 150)
-        pwm.set_pwm(9, 0, 600 - arm_hor)
+        pwm.set_pwm(12, 0, arm_ver + 150)
+        pwm.set_pwm(11, 0, 600 - arm_ver)
+        pwm.set_pwm(10, 0, arm_ver + 150)
+        pwm.set_pwm(9, 0, 600 - arm_ve)
             
 def arm(): #This is the arming procedure of an ESC 
     print "Connect the battery and press Enter"
