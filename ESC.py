@@ -29,8 +29,8 @@ pwm = Adafruit_PCA9685.PCA9685(address=0x49)
 servo_min = 150  # Min pulse length out of 4096
 servo_max = 600  # Max pulse length out of 4096
 dumen_ang = 370
-arm_ver = 0  # 0 -> 450
-arm_hor = 0
+arm_ver = 180
+arm_hor = 180
 
 max_value = 2000 #change this if your ESC's max value is different or leave it be
 min_value = 700  #change this if your ESC's min value is different or leave it be
@@ -110,20 +110,20 @@ def control():
             speed += 100    # incrementing the speed of ESC like hell
             print "speed = %d" % speed
 
-        elif inp == "w" and servo_ang < 500:
+        elif inp == "w" and dumen_ang < 500:
             dumen_ang += 40
-        elif inp == "s" and servo_ang > 200: 
+        elif inp == "s" and dumen_ang > 200: 
             dumen_ang -= 40
 
         elif inp == "e" and arm_ver < 450:    
-            arm_ver += 10
+            arm_ver += 90
         elif inp == "d" and arm_ver > 0:    
-            arm_ver -= 10
+            arm_ver -= 90
 
         elif inp == "r" and arm_hor < 450:
-            dumen_ang += 10
+            arm_hor += 10
         elif inp == "f" and arm_hor > 0:    
-            dumen_ang -= 10
+            arm_hor -= 10
        
         elif inp == "stop":
             stop()          #going for the stop function
@@ -131,7 +131,7 @@ def control():
         elif inp != "":
             print "WHAT DID I SAID!! Make good input please thank you"
 
-        pwm.set_pwm(15, 0, dumen_ang)  # Dümen
+        pwm.set_pwm(15, 0, dumen_ang) 
 
         pwm.set_pwm(14, 0, arm_hor + 150)
         pwm.set_pwm(13, 0, 600 - arm_hor)
@@ -139,7 +139,7 @@ def control():
         pwm.set_pwm(12, 0, arm_ver + 150)
         pwm.set_pwm(11, 0, 600 - arm_ver)
         pwm.set_pwm(10, 0, arm_ver + 150)
-        pwm.set_pwm(9, 0, 600 - arm_ve)
+        pwm.set_pwm(9, 0, 600 - arm_ver)
             
 def arm(): #This is the arming procedure of an ESC 
     print "Connect the battery and press Enter"
